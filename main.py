@@ -38,13 +38,15 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
         if not user_response or not user_response.user:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail={"error": "Invalid or expired token"}
+                detail={"error": "Invalid or expired token"},
+                headers={"WWW-Authenticate": "Bearer"}
             )
         return user_response.user
     except Exception:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail={"error": "Invalid or expired token"}
+            detail={"error": "Invalid or expired token"},
+            headers={"WWW-Authenticate": "Bearer"}
         )
 
 # Stage 1: Auth Routes
