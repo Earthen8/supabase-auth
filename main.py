@@ -20,7 +20,7 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 app = FastAPI(
     title="Auth API - Supabase & FastAPI",
-    description="API Otonomi dan Proteksi Route Menggunakan Supabase Auth",
+    description="Otonomy API and Route Protection Using Supabase Auth",
     version="1.0.0"
 )
 
