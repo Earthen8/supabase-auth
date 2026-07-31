@@ -30,11 +30,11 @@ class AuthSchema(BaseModel):
     email: EmailStr
     password: str
 
-# Middleware / Dependency
+# Middleware / Dependency untuk verifikasi JWT Token
 def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     token = credentials.credentials
     try:
-        user_response = supabase.auth.get_user(token)
+        user_response = supabase.auth.get_user(jwt=token)
         if not user_response or not user_response.user:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
@@ -42,6 +42,8 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
                 headers={"WWW-Authenticate": "Bearer"}
             )
         return user_response.user
+    except HTTPException:
+        raise
     except Exception:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
